@@ -50,7 +50,7 @@ variable "env_name" {
 variable "source_repo" {
   description = "name of repo which holds this code"
   type        = string
-  default = "stratus_grid_s3"
+  default = "dgracilieri/stratus_grid_s3"
 }
 
 variable "developer" {
