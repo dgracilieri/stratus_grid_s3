@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "s3bucket" {
   acl    = "private"
   
   versioning {
-    enabled = true
+    enabled = false
   }
   
   website {
@@ -22,3 +22,22 @@ resource "aws_s3_bucket" "s3bucket" {
   }   
 }
 
+resource "aws_s3_bucket" "s3bucket-log" {
+  bucket = "${var.env_name}${var.s3-bucket-name}-log"
+
+  acl    = "private"
+  
+  versioning {
+    enabled = false
+  }
+
+  tags = local.common_tags
+}
+
+
+resource "aws_s3_bucket_logging" "s3log" {
+  bucket = aws_s3_bucket.s3bucket.id
+
+  target_bucket = aws_s3_bucket.s3bucket-log.id
+  target_prefix = "log/"
+}
