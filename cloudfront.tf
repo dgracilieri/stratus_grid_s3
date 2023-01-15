@@ -21,8 +21,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment = var.comment
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
+    allowed_methods  = var.allowed_methods
+    cached_methods   = var.cached_methods
     target_origin_id = var.s3_origin_id
   
 
@@ -43,9 +43,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   ordered_cache_behavior {
     path_pattern     = "*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods  = var.cached_methods
     cache_policy_id = data.aws_cloudfront_cache_policy.CachingDisabled.id
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = var.cached_methods
     target_origin_id = var.s3_origin_id
 
     viewer_protocol_policy = "allow-all"
