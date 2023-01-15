@@ -18,11 +18,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   price_class         = "PriceClass_100"
   default_root_object = "index.html"
   wait_for_deployment = false
+  comment = var.comment
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = var.s3_origin_id
+  
 
     forwarded_values {
       query_string = false
