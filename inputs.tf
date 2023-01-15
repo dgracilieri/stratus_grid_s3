@@ -77,3 +77,17 @@ variable "comment" {
     default  = "stratusgrid-infraestructure"
   
 }
+
+variable "allowed_methods" {
+    description = "List of allowed methods (e.g. ` GET, PUT, POST, DELETE, HEAD`) for AWS CloudFront"
+    type     = list(string)
+    default  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+  
+}
+
+variable "cached_methods" {
+    description = "List of cached methods (e.g. ` GET, PUT, POST, DELETE, HEAD`)"
+    type     = list(string)
+    default  = ["GET", "HEAD", "OPTIONS"]
+  
+}
