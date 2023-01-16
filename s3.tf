@@ -1,8 +1,6 @@
 resource "aws_s3_bucket" "s3bucket" {
   bucket = "${var.env_name}${var.s3-bucket-name}"
 
-  acl    = "private"
-  
   versioning {
     enabled = false
   }
@@ -22,12 +20,9 @@ resource "aws_s3_bucket" "s3bucket" {
   }   
 }
 
-resource "aws_s3_bucket" "s3bucket-log" {
+resource "aws_s3_bucket" "s3bucketlog" {
   bucket = "${var.env_name}${var.s3-bucket-name}-log"
-
-  acl    = "private"
-  
-  versioning {
+    versioning {
     enabled = false
   }
 
@@ -38,6 +33,16 @@ resource "aws_s3_bucket" "s3bucket-log" {
 resource "aws_s3_bucket_logging" "s3log" {
   bucket = aws_s3_bucket.s3bucket.id
 
-  target_bucket = aws_s3_bucket.s3bucket-log.id
+  target_bucket = aws_s3_bucket.s3bucketlog.id
   target_prefix = "log/"
+}
+
+resource "aws_s3_bucket_acl" "s3_bucket_acl" {
+  bucket = aws_s3_bucket.s3bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_acl" "log_bucket_acl" {
+  bucket = aws_s3_bucket.s3bucketlog.id
+  acl    = "private"
 }
